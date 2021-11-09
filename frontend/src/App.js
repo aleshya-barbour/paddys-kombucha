@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
-import commerce from './lib/commerce';
-import Product from './Components/Product';
 
-class App extends Component() {
+import { CardProduct } from './Components/Products/Product';
+
+class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      Product: [], 
-    }
+      CardProduct: [] 
+    };
   }
 
   render () {
     return (
       <div className="app">
-      <Product />
+      
+      <CardProduct />       
 
       </div>
     )
