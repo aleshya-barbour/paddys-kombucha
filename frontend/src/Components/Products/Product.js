@@ -1,11 +1,8 @@
 import React from 'react'
-import {Card, CardMedia, CardContent, Typography} from '@mui/material';
+import {Card, CardMedia, CardContent, Typography, CardActions, Button} from '@mui/material';
 
 
-// import Typography from '@mui/material/Typography';
-// import { Button, CardActionArea, CardActions } from '@mui/material';
-// import { typography } from '@mui/system';
-
+<img width="100" alt ="kombucha" height="200" src="://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTh9hejjotJbTsLNCMVxIypdKuodVKAB3Pivw&usqp=CAU"></img>
 
 export function CardProduct () {
 
@@ -23,16 +20,28 @@ export function CardProduct () {
     { products.map((kombuchaDrink) => (
        <Card sx={{ maxWidth: 345 }}>
        
-    
+        <CardMedia
+          component="img"
+          alt="kombucha"
+          height="140"
+          image="https://media.istockphoto.com/photos/fermented-strawberry-kombucha-tea-with-bottles-picture-id1294202740?b=1&k=20&m=1294202740&s=170667a&w=0&h=8BrBAXD-5uroYOwfeVGGdK610NJhGKPg-mkYZh_ckU4="
+        />
         <CardContent>
          
           <Typography gutterBottom variant="h5" component="div">
-           
-          
-            {kombuchaDrink.Name} {kombuchaDrink.Price}
+            {kombuchaDrink.Name}
+          </Typography>
+
+          <Typography variant="body2" color="text.secondary">
+            {kombuchaDrink.Description} 
           </Typography>
             
           </CardContent>
+          <CardActions>
+            <Button size="small" color="error" variant="contained">
+              Buy
+            </Button>
+          </CardActions>
         </Card>
         ))}
            
