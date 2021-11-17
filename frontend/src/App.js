@@ -3,7 +3,7 @@ import { commerce } from './lib/commerce';
 
 import './styles/scss/styles.scss'
 import Hero from './Components/Hero';
-import Product from './Components/Products/Product';
+import Product from './Components/Product';
 
 class App extends Component {
   constructor(props) {
@@ -11,12 +11,23 @@ class App extends Component {
 
     this.state = {
       CardProduct: [],
-      cart: {},
+      Cart: {},
     };
   }
 
+
+  
   componentDidMount() {
+    this.fetchProducts();
     this.fetchCart();
+  }
+
+  fetchProducts() {
+    commerce.products.list().then((products) => {
+      this.setState({ products: products.data});
+    }).catch((error) => {
+      console.log('There was a problem fetching products', error)
+    })
   }
 
   fetchCart() {
@@ -26,14 +37,26 @@ class App extends Component {
       console.error('Issue fetching the cart', error)
     })
   }
+
+  handleAddToCart(productId, quantity) {
+    commerce.cart.add(productId, quantity).then((item) => {
+      this.setState({ cart: item.cart})
+    }).catch((error) => {
+      console.error('There was an error adding the item to the cart', error);
+    })
+  }
  
 
   render () {
+    const { products } = this.state;
     return (
       <div className="app">
         <Hero />
       
-        <Product />
+        <Product 
+          products={products}
+          onAddToCart={this.handleAddToCart} 
+        />
 
       </div>
     )
