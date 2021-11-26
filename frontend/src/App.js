@@ -4,6 +4,7 @@ import { commerce } from './lib/commerce';
 import './styles/scss/styles.scss'
 import Hero from './Components/Hero';
 import Product from './Components/Product';
+// import Cart from './Components/Cart'
 
 class App extends Component {
   constructor(props) {
@@ -13,6 +14,11 @@ class App extends Component {
       CardProduct: [],
       Cart: {},
     };
+
+    this.handleAddToCart = this.handleAddToCart.bind(this);
+    this.handleUpdateCartQty = this.handleUpdateCartQty.bind(this);
+    this.handleRemoveFromCart = this.handleRemoveFromCart.bind(this);
+    this.handleEmptyCart = this.toogleCart.bind(this);
   }
 
 
@@ -20,6 +26,13 @@ class App extends Component {
   componentDidMount() {
     this.fetchProducts();
     this.fetchCart();
+  }
+
+  toogleCart() {
+    const { isCartVisible } = this.state
+    this.setState({
+      isCartVisible: !isCartVisible,
+    })
   }
 
   fetchProducts() {
@@ -45,7 +58,24 @@ class App extends Component {
       console.error('There was an error adding the item to the cart', error);
     })
   }
- 
+  
+  handleUpdateCartQty(lineItemId, quantity) {
+    commerce.cart.update(lineItemId, { quantity }).then((resp) => {
+      this.setState({ cart: resp.cart })
+    }).catch((error) => {
+      console.log('There was an error updating the cart items', error);
+    });
+  }
+
+  handleRemoveFromCart(lineItemId) {
+    commerce.cart.remove(lineItemId).then((resp) => {
+      this.setState({
+        cart: resp.cart
+      })
+    }).catch((error) => {
+      console.error('There was an error removing the item from the cart', error);
+    });
+  }
 
   render () {
     const { products } = this.state;
@@ -57,6 +87,10 @@ class App extends Component {
           products={products}
           onAddToCart={this.handleAddToCart} 
         />
+{/* 
+        <Cart 
+          cart={Cart}
+        /> */}
 
       </div>
     )

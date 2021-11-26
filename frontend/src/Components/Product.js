@@ -39,9 +39,12 @@ class Product extends Component {
           spacing={{ xs: 1, md: 4 }} 
           columns={{ xs: 4, sm: 8, md: 12 }}
         >
-        { products.map((kombuchaDrink) => (
-          <Grid item xs={2} sm={4} md={4} >
-          <Card sx={{ maxWidth: 345 }}>
+        
+         { products.map((kombuchaDrink) => ( 
+           
+          
+          <Grid item xs={2} sm={4} md={4} key = {kombuchaDrink.Id}>
+          <Card sx={{ maxWidth: 345 }} key = {kombuchaDrink.Id}>
           
             <CardMedia
               component="img"
