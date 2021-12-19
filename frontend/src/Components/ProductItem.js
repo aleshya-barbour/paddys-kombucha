@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Card, Grid, CardMedia, CardContent, Typography, CardActions, Button} from '@mui/material';
+import {Card, Grid, CardContent, Typography, CardActions, Button} from '@mui/material';
 
 
 
@@ -7,13 +7,16 @@ class ProductItem extends Component {
   constructor(props) {
     super(props);
 
+    this.handleAddToCart = this.handleAddToCart.bind(this);
+  }
 
+  handleAddToCart() {
+    this.props.onAddToCart(this.props.product.id, 1);
   }
  
   render(){
-
     const { product } = this.props
-  
+   
     return (
 
       <div id="products" className="product__cart">
@@ -28,20 +31,15 @@ class ProductItem extends Component {
           <Grid item xs={2} sm={4} md={4} >
           <Card sx={{ maxWidth: 345 }}>
           
-            <CardMedia
-              component="img"
-             
-              height="140"
-              // src ="./assets/product.jpg  "
-            />
+           <img className="Product__card" src={product.assets} alt={product.name} />
             <CardContent>
               
               <Typography gutterBottom variant="h5" component="div">
-              
+                <h4>{product.name}</h4>
               </Typography>
 
               <Typography variant="body2" color="text.secondary">
-            
+                {product.description}
               </Typography>
                 
               </CardContent>

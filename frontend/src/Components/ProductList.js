@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
-import Product from './ProductItem';
+
+import PropTypes from 'prop-types';
+import ProductItem from './ProductItem';
+
 
 class ProductList extends Component {
 
@@ -9,18 +12,15 @@ class ProductList extends Component {
     return ( 
       <>
         <div>
-
-          {products.map((product) => (
-            <Product
-              key={product.id}
-              product={product}
-              {...this.props}
+          {products.map((product) =>(
+            <ProductItem
+            key={product.id}
+            product={product}
             />
           ))}
         
+        
         </div>
-
-
       </>
     )
 
@@ -30,3 +30,7 @@ class ProductList extends Component {
 
 export default ProductList;
 
+ProductList.propTypes = {
+  products: PropTypes.array
+
+}
