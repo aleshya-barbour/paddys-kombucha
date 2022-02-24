@@ -1,21 +1,14 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {Card, Grid, CardContent, Typography, CardActions, Button} from '@mui/material';
 
 
 
-class ProductItem extends Component {
-  constructor(props) {
-    super(props);
 
-    this.handleAddToCart = this.handleAddToCart.bind(this);
-  }
-
-  handleAddToCart() {
-    this.props.onAddToCart(this.props.product.id, 1);
-  }
+ const ProductItem = ({ product, onAddToCart }) => {
+   const handleAddToCart = () => {
+     onAddToCart(product.id, 1)
+   }
  
-  render(){
-    const { product } = this.props
    
     return (
 
@@ -50,7 +43,7 @@ class ProductItem extends Component {
                 variant="contained"
                 name="Add to cart"
                 className="buy__btn"
-                onClick={this.handleAddToCart}
+                onClick={handleAddToCart}
                 >
                   Buy
                 </Button>
@@ -63,9 +56,8 @@ class ProductItem extends Component {
     
     </div>
   )
-}
+  }
 
-}
 export default ProductItem;
 
 

@@ -1,94 +1,111 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { commerce } from './lib/commerce';
+// import { Routes, Route } from 'react-router-dom'
 
 import './styles/scss/styles.scss'
+
 import Hero from './Components/Hero';
 import ProductList from './Components/ProductList';
-import Cart from './Components/Cart'
+import CartNav from './Components/CartNav'
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+const App = () => {
+  const [merchant, setMerchant] = useState({})
+  const [products, setProducts] = useState([]);
+  const [cart, setCart] = useState({});
 
-    this.state = {
-      products: [],
-      cart: {},
-  
-        
-    };
     
-    
-  }
-
+  useEffect(() => {
+    fetchMerchantDetails();
+    fetchProducts();
+    fetchCart();
  
-   
-  componentDidMount() {
-    this.fetchProducts();
-    this.fetchCart();
+  }, []);   
+  
+  const fetchMerchantDetails = () => {
+    commerce.merchants.about().then((merchant) => {
+      setMerchant(merchant);
+    }).catch((error) => {
+      console.log('There was an error fetching the merchant details', error)
+    })
   }
 
-  fetchProducts () {
+  const fetchProducts = () => {
     commerce.products.list().then((products) => {
-      this.setState({ products: products.data});
+      setProducts(products.data);
     }).catch((error) => {
-      console.log('There was an error fetching your product', error)
-    })
+      console.log('There was an error fetching the products', error)
+    });
   }
 
-  fetchCart() {
+  const fetchCart = () => {
     commerce.cart.retrieve().then((cart) => {
-      this.setState({ cart });
+      setCart(cart);
     }).catch((error) => {
-      console.error('There was an error fetching the cart', error)
-    })
+      console.log('There was an error fetching the cart', error);
+    });
+  }
+  const handleUpdateCartQty = (lineItemId, quantity) => {
+    commerce.cart.update(lineItemId, { quantity }).then((resp) => {
+      setCart(resp.cart);
+    }).catch((error) => {
+      console.log('There was an error updating the cart items', error);
+    });
   }
 
-  handleUpdateCartQty(lineItemId, quantity) {
-    commerce.cart.update(lineItemId, { quantity}).then((resp) => {
-      this.setState({cart: resp.cart})
-    }).catch((error) => {
-      console.log('Theere was an error updating the cart items', error)
-    })
-  }
-
-  handleAddToCart(productId, quantity) {
+  const handleAddToCart = (productId, quantity) => {
     commerce.cart.add(productId, quantity).then((item) => {
-      this.setState({ cart: item.cart })
-    }).catch((error) =>{
-      console.error('There was an error adding the item to the cart', error)
-    })
+      setCart(item.cart);
+    }).catch((error) => {
+      console.error('There was an error adding the item to the cart', error);
+    });
+  }
+                                       
+  const handleRemoveFromCart = (lineItemId) => {
+    commerce.cart.remove(lineItemId).then((resp) => {
+      setCart(resp.cart);
+    }).catch((error) => {
+      console.error('There was an error removing the item from the cart', error);
+    });
+  }
+ 
+ const handleEmptyCart = () => {
+    commerce.cart.empty().then((resp) => {
+      setCart(resp.cart);
+    }).catch((error) => {
+      console.error('There was an error emptying the cart', error);
+    });
   }
 
-
-  render () {
-    
-    const { products, cart, loading } = this.state;
-    if (loading) {
-      return<p>Loading...</p>;
-    }
-    return (
-      <div className="app">
-        <Hero />
-      
-        <ProductList
-          products={products}
-          onAddToCart={this.handleAddToCart}
-        />
-
-        <Cart
-          cart={cart}
-          onUpdateCartQty={this.handleUpdateCartQty}
-          onRemoveFromCart={this.handleRemoveFromCart}
-          onEmptyCart={this.handleEmptyCart}
-        />
-        
-
+  
+       return (
+        <div className="app">
+          <Hero 
+            merchant={merchant}
+            />
+         
        
-
-      </div>
-    )
+         
+          <CartNav
+         
+            cart={cart}
+            onUpdateCartQty={handleUpdateCartQty}
+            onRemoveFromCart={handleRemoveFromCart}
+            onEmptyCart={handleEmptyCart}
+          />
+         
+          
+         <ProductList
+            products={products}
+            onAddToCart={handleAddToCart}
+          />
+        </div>
+       )
+     
+   
+     
+    
+    
   }
-}
 
 export default App;
        

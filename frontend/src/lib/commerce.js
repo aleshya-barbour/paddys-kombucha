@@ -9,7 +9,7 @@ export const commerce = new Commerce(process.env.REACT_APP_CHEC_PUBLIC_KEY, true
 commerce.cart.retrieve().then((cart) => console.log(cart));
 commerce.cart.refresh().then((cart) => console.log(cart));
 commerce.cart.add('prod_gnZO5k4R8gl7MN', 5).then((response) => console.log(response));
-
+commerce.checkout.getToken('chkt_L5z3kmQpdpkGlA').then((token) => console.log(token));
 
 // curl -X POST \
 // "https://api.chec.io/v1/carts/cart_ql9Wmad240029o"" \
