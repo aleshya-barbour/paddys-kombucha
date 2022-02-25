@@ -79,19 +79,17 @@ const App = () => {
   
        return (
         <div className="app">
-          <Hero 
-            merchant={merchant}
-            />
          
-       
-         
-          <CartNav
-         
+          <CartNav    
             cart={cart}
             onUpdateCartQty={handleUpdateCartQty}
             onRemoveFromCart={handleRemoveFromCart}
             onEmptyCart={handleEmptyCart}
           />
+
+           <Hero 
+            merchant={merchant}
+            />
          
           
          <ProductList

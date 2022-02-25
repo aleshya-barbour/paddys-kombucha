@@ -26,3 +26,4 @@ commerce.checkout.getToken('chkt_L5z3kmQpdpkGlA').then((token) => console.log(to
 // curl -X GET \
 //     -G "https://api.chec.io/v1/carts/cart_ql9Wmad240029o" \
 //     -H "X-Authorization:pk_34669f6f48bde827c82dcdc26ae4aa719a879f27edc63"
+ 

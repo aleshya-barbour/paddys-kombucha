@@ -1,10 +1,14 @@
 import React from 'react'
 import {Card, Grid, CardContent, Typography, CardActions, Button} from '@mui/material';
+import stripHtml from 'cli-strip-html'
 
 
 
 
  const ProductItem = ({ product, onAddToCart }) => {
+
+   const result  = stripHtml(product.description)
+
    const handleAddToCart = () => {
      onAddToCart(product.id, 1)
    }
@@ -24,15 +28,15 @@ import {Card, Grid, CardContent, Typography, CardActions, Button} from '@mui/mat
           <Grid item xs={2} sm={4} md={4} >
           <Card sx={{ maxWidth: 345 }}>
           
-           <img className="Product__card" src={product.assets} alt={product.name} />
+           <img className="Product__card" src={product.image.url} alt={product.name} />
             <CardContent>
               
               <Typography gutterBottom variant="h5" component="div">
                 <h4>{product.name}</h4>
               </Typography>
 
-              <Typography variant="body2" color="text.secondary">
-                {product.description}
+              <Typography variant="body2" color="text.secondary">  
+                {result}
               </Typography>
                 
               </CardContent>
