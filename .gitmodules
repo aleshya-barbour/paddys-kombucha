@@ -1,0 +1,3 @@
+[submodule "more-kombucha/frontend/more-kombucha/frontend/kombucha"]
+	path = more-kombucha/frontend/more-kombucha/frontend/kombucha
+	url = https://github.com/aleshya-barbour/paddys-kombucha.git
